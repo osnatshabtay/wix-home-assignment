@@ -78,6 +78,7 @@ function App() {
       .then((response) => {
         setAllPosts([...response.data['Posts']]);
         setFilteredPosts([...response.data['Posts']]);
+        //console.log(response.data['Posts'][0].likes.size);
       })
       .catch((error) => {
         handleAlert(error.message, true, 'error');
@@ -111,7 +112,7 @@ function App() {
     axios
       .get(`${baseURL}/posts?${url}`)
       .then((response) => {
-        setFilteredPosts([...response.data['Posts']]);
+        setFilteredPosts([...response.data['filteredPosts']]);
       })
       .catch((error) => {
         handleAlert(error.message, true, 'error');
@@ -180,6 +181,17 @@ function App() {
         handleAlert(error.message, true, 'error');
       });
   };
+
+    const addLikeOrDislikeToPost = (postID, userID, likeOrDis) => { 
+      axios
+        .post(`${baseURL}/post/postID/${postID}/likeOrDis/${likeOrDis}`)
+        .then((response) => {
+          handleAlert("like or dislike was added successfully", true, "success");
+        })
+        .catch((error) => {
+          handleAlert(error.message, true, 'error');
+        });
+    };
 
 
   ///////////////////////////////////// handle click events /////////////////////////////////////
@@ -294,9 +306,13 @@ function App() {
                 selectedPopularityQuery={selectedPopularityQuery}
                 userId={userId}
                 handleAddTagToPost={addTagToPost}
+                handleAddLikeOrDislikeToPost ={addLikeOrDislikeToPost}
               />
             }
           />
+          {/* <Route
+            path="/?popularity=:popularity"
+          /> */}
         </Routes>
       </Router>
     </div>
