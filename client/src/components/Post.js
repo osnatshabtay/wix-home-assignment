@@ -13,11 +13,14 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import AddTagButton from './AddTagButton';
 import Tag from './Tag';
+import { useState } from 'react';
 
 function Post({
   postId,
   postTitle,
   postContent,
+  numOfLikes,
+  numOfDislikes,
   isAddTagBtn,
   handleAddTagClick,
   handleTagClick,
@@ -25,6 +28,7 @@ function Post({
   isTagDisabled,
   Tags,
   userId,
+  handleAddLikeOrDislikeToPost,
 }) {
   const getTagsByPostId = (postID) => {
     const tagsArr = [];
@@ -38,8 +42,16 @@ function Post({
 
   const tagsNameArr = getTagsByPostId(postId);
   const isTag = tagsNameArr.length > 0 ? true : false;
-  const didUserLikePost = false;
-  const didUserDislikePost = false;
+
+  const [didUserLikePost, setDidUserLikePost] = useState(false);
+  const [didUserDislikePost, setDidUserDislikePost] = useState(false);
+
+
+  // console.log("-------");
+  // console.log(numOfDislikes);
+
+  //const didUserLikePost = false;
+  //const didUserDislikePost = false;
 
   return (
     <ListItem
@@ -89,6 +101,10 @@ function Post({
             aria-label='dislike'
             size='small'
             data-testid={`postDislikeBtn-${postId}`}
+            onClick={(e) => {
+              setDidUserLikePost(false);
+              setDidUserDislikePost(true);
+              handleAddLikeOrDislikeToPost(postId, userId, "dislike")}}
           >
             {didUserDislikePost ? (
               <ThumbDownAltIcon
@@ -107,12 +123,17 @@ function Post({
             data-testid={`postDislikeNum-${postId}`}
             color='red'
           >
-            0
+            {numOfDislikes}
           </Typography>
           <IconButton
             aria-label='like'
             size='small'
             data-testid={`postLikeBtn-${postId}`}
+            onClick={(e) => {
+              setDidUserLikePost(true);
+              setDidUserDislikePost(false);
+              handleAddLikeOrDislikeToPost(postId, userId, "like")}
+            }
           >
             {didUserLikePost ? (
               <ThumbUpAltIcon
@@ -131,7 +152,7 @@ function Post({
             data-testid={`postLikeNum-${postId}`}
             color='green'
           >
-            0
+            {numOfLikes}
           </Typography>
         </CardActions>
       </Card>

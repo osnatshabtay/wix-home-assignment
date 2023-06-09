@@ -14,6 +14,7 @@ function Home({
   selectedPopularityQuery,
   userId,
   handleAddTagToPost,
+  handleAddLikeOrDislikeToPost,
 }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -47,13 +48,15 @@ function Home({
     <div className='container'>
       <List sx={{ width: '650px' }}>
         {Posts.length !== 0 &&
-          Posts.map((post) => {
+          Posts.map((post) => {            
             return (
               <Post
                 key={`home-${post.id}`}
                 postId={post.id}
                 postTitle={post.title}
                 postContent={post.content}
+                numOfLikes={post.likes}
+                numOfDislikes={post.dislikes}
                 isAddTagBtn={true}
                 handleAddTagClick={handleAddTagClick}
                 handleTagClick={handleTagClick}
@@ -61,6 +64,7 @@ function Home({
                 isTagDisabled={false}
                 Tags={Tags}
                 userId={userId}
+                handleAddLikeOrDislikeToPost = {handleAddLikeOrDislikeToPost}
               />
             );
           })}

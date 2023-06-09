@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 const cors = require('cors');
 
 const { baseUrl } = require('../constants');
-const { Posts } = require('./model/Posts');
+const { Posts, Likes, Dislikes, updateLikes, updateDislikes } = require('./model/Posts');
 const { Tags } = require('./model/Tags');
 
 const app = express();
@@ -55,7 +55,7 @@ app.post('/posts', cors(corsOptions), (req, res) => {
   }
 
   // Create new post object.
-  const newPost = {id: id, title: title, content: content, userId: userId}
+  const newPost = {id: id, title: title, content: content, userId: userId, likes: 0, dislikes: 0}
   // Add post to a Posts model.
   Posts.push(newPost);
 
@@ -71,6 +71,53 @@ app.post('/posts', cors(corsOptions), (req, res) => {
   res.send({ Posts }).status(200).end();
 });
 
+
+app.get('/posts', cors(corsOptions), (req, res) => {
+  if (req.query.popularity) {
+    // TODO - implement popularity filter functionality here
+    const popularity = Number(req.query.popularity); 
+    const filteredPosts = Posts.filter((post) => post.likes >= popularity);
+    res.send({ filteredPosts });
+    return;
+    // End of TODO
+  }
+  res.send({ Posts });
+});
+
+app.post('/post/postID/:postID/likeOrDis/:likeOrDis', cors(corsOptions), (req, res) => {
+  const userId = req.cookies?.userId;
+  if (!userId) {
+    res.status(403).end();
+    return;
+  }
+  const {postID, likeOrDis} = req.params
+  if(!postID || !likeOrDis){
+    res.status(400).end();
+    return;
+  }
+
+  if(likeOrDis === "like"){
+    if(!Likes[postID].has(userId)){ 
+      if(Dislikes[postID].has(userId)){
+        Dislikes[postID].delete(userId)
+        updateDislikes(postID, 'subtract');
+      }
+      Likes[postID].add(userId);
+      updateLikes(postID, 'add');
+    }
+  }
+  if(likeOrDis === "dislike"){
+    if(!Dislikes[postID].has(userId)){
+      if(Likes[postID].has(userId)){
+        Likes[postID].delete(userId)
+        updateLikes(postID, 'subtract');
+      }
+      Dislikes[postID].add(userId);
+      updateDislikes(postID, 'add');
+    }
+  }
+  res.send({ Posts }).status(200).end();
+});
 ///////////////////////////////////// tags /////////////////////////////////////
 app.get('/tags', cors(corsOptions), (req, res) => {
   res.send({ Tags });
