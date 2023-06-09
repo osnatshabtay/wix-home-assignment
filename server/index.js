@@ -49,8 +49,6 @@ app.post('/posts', cors(corsOptions), (req, res) => {
     return;
   }
   const{ id, title, content, selectedTag } = req.body.post;
-  console.log("new post = " + selectedTag);
-
   if(!title || !content){
     res.status(400).end("Required fields are empty");
     return;

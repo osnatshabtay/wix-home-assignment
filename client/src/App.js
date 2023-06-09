@@ -147,7 +147,6 @@ function App() {
         handleAlert("Post added successfully", true, "success");
       })
       .catch((error) => {
-        console.log("error");
         handleAlert(error.message, true, "error");
       }
       );
@@ -281,7 +280,7 @@ function App() {
           />
           <Route
             path='/add-new-post'
-            element={<AddNewPost handleAddPost={addPost} />}
+            element={<AddNewPost handleAddPost={addPost} tagsList={tags} />}
           />
           <Route
             path='/'

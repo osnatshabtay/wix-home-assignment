@@ -15,9 +15,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
-function AddNewPost({ handleAddPost }) {
-  const tagsList = ['Server', 'Frontend', 'Security', 'Analytics', 'Mobile']; // mock tags data
-
+function AddNewPost({ handleAddPost, tagsList }) {
+  //const tagsList = ['Server', 'Frontend', 'Security', 'Analytics', 'Mobile']; // mock tags data 
+  const tagsArray = Object.entries(tagsList).map(([tagName]) => ({ tagName}));
   const navigate = useNavigate();
 
   const [title, setTitle] = useState('');
@@ -96,13 +96,13 @@ function AddNewPost({ handleAddPost }) {
               }}
               data-testid='addNewPost-postTag'
             >
-              {tagsList.map((option) => (
+              {tagsArray.map((option) => (
                 <MenuItem
-                  key={option}
-                  value={option}
+                  key={option.tagName}
+                  value={option.tagName}
                   data-testid={`addNewPost-postTagOption-${option}`}
                 >
-                  {option}
+                  {option.tagName}
                 </MenuItem>
               ))}
             </Select>
