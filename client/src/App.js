@@ -145,6 +145,9 @@ function App() {
       )
       .then((response) => {
         navigate('/');
+        setAllPosts([...response.data['Posts']]);
+        setFilteredPosts([...response.data['Posts']]);
+        setTags({ ...response.data['Tags'] });
         handleAlert("Post added successfully", true, "success");
       })
       .catch((error) => {

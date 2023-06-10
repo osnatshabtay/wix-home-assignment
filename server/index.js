@@ -43,9 +43,6 @@ app.get('/user', cors(corsOptions), (req, res) => {
 // });
 
 app.get('/posts', cors(corsOptions), (req, res) => {
-  const {url} = req.params;
-  console.log(url + " ----");
-  console.log(req.query);
   if (req.query.popularity) {
     // TODO - implement popularity filter functionality here
     const popularity = Number(req.query.popularity); 
@@ -83,7 +80,7 @@ app.post('/posts', cors(corsOptions), (req, res) => {
     }
     Tags[selectedTag][id] = true;
   }
-  res.send({ Posts }).status(200).end();
+  res.send({ Posts, Tags }).status(200).end();
 });
 
 
