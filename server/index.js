@@ -31,11 +31,26 @@ app.get('/user', cors(corsOptions), (req, res) => {
 });
 
 ///////////////////////////////////// posts /////////////////////////////////////
+// app.get('/posts', cors(corsOptions), (req, res) => {
+//   if (req.query.popularity) {
+//     // TODO - implement popularity filter functionality here
+//     const popularity = Number(req.query.popularity);
+//     res.send({ Posts });
+//     return;
+//     // End of TODO
+//   }
+//   res.send({ Posts });
+// });
+
 app.get('/posts', cors(corsOptions), (req, res) => {
+  const {url} = req.params;
+  console.log(url + " ----");
+  console.log(req.query);
   if (req.query.popularity) {
     // TODO - implement popularity filter functionality here
-    const popularity = Number(req.query.popularity);
-    res.send({ Posts });
+    const popularity = Number(req.query.popularity); 
+    const filteredPosts = Posts.filter((post) => post.likes >= popularity);
+    res.send({ filteredPosts });
     return;
     // End of TODO
   }
@@ -71,18 +86,6 @@ app.post('/posts', cors(corsOptions), (req, res) => {
   res.send({ Posts }).status(200).end();
 });
 
-
-app.get('/posts', cors(corsOptions), (req, res) => {
-  if (req.query.popularity) {
-    // TODO - implement popularity filter functionality here
-    const popularity = Number(req.query.popularity); 
-    const filteredPosts = Posts.filter((post) => post.likes >= popularity);
-    res.send({ filteredPosts });
-    return;
-    // End of TODO
-  }
-  res.send({ Posts });
-});
 
 app.post('/post/postID/:postID/likeOrDis/:likeOrDis', cors(corsOptions), (req, res) => {
   const userId = req.cookies?.userId;

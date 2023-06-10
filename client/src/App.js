@@ -105,13 +105,14 @@ function App() {
     getPosts();
     getTags();
     getUser();
-  }, [getPosts, getTags, getUser, tagsList]);
+  }, [getPosts, getTags, getUser]);
 
   const getFilteredPosts = (popularity, tag) => {
     const url = popularity !== '' ? `popularity=${popularity}` : '';
     axios
       .get(`${baseURL}/posts?${url}`)
       .then((response) => {
+        console.log(response.data);
         setFilteredPosts([...response.data['filteredPosts']]);
       })
       .catch((error) => {
@@ -175,6 +176,7 @@ function App() {
     axios
       .post(`${baseURL}/addTags/postID/${postID}/tagName/${tagName}`)
       .then((response) => {
+        setTags({ ...response.data['Tags'] });
         handleAlert("Tag was added successfully", true, "success");
       })
       .catch((error) => {
@@ -186,6 +188,8 @@ function App() {
       axios
         .post(`${baseURL}/post/postID/${postID}/likeOrDis/${likeOrDis}`)
         .then((response) => {
+          setAllPosts([...response.data['Posts']]);
+          setFilteredPosts([...response.data['Posts']]);
           handleAlert("like or dislike was added successfully", true, "success");
         })
         .catch((error) => {
