@@ -33,6 +33,9 @@ app.get('/user', cors(corsOptions), (req, res) => {
   res.cookie('userId', userId).send({ id: userId });
 });
 
+app.get('/tags', cors(corsOptions), (req, res) => {
+  res.send({ Tags });
+});
 
 app.get('/posts', cors(corsOptions), (req, res) => {
   let filteredPosts = Posts;
@@ -41,8 +44,6 @@ app.get('/posts', cors(corsOptions), (req, res) => {
   if (req.query.popularity) {
     const popularity = Number(req.query.popularity); 
     filteredPosts = filteredPosts.filter((post) => post.likes >= popularity);
-    // res.send({ filteredPosts });
-    // return;
   }
 
   // filter by tag
@@ -51,11 +52,6 @@ app.get('/posts', cors(corsOptions), (req, res) => {
     filteredPosts = filteredPosts.filter(post => Tags[tag] && Tags[tag][post.id]);
   }
 
-
-  // if(filteredPosts.length !== 0){
-  //   res.send({filtredPosts});
-  //   return;
-  // }
   res.send({ filteredPosts });
 });
 
@@ -64,14 +60,28 @@ app.get('/user-like-post', cors(corsOptions), (req, res) => {
   const userID = req.query.userID;
 
   if(!Likes[postID] || !Dislikes[postID]){
-    res.status(400).end("postID not found");
+    res.status(400).end("Invalid postID");
+    return;
   }
 
   res.send({ like: Likes[postID].has(userID), dislike: Dislikes[postID].has(userID) });
 });
 
-app.get('/tags', cors(corsOptions), (req, res) => {
-  res.send({ Tags });
+app.get('/my-recommended-posts', cors(corsOptions), (req, res) => {
+  const userId = req.query.userId;
+  console.log("????");
+  console.log(userId);
+  console.log("!!!!");
+
+  if(!userId){
+    res.status(400).end("Invalid userId");
+    return;
+  }
+
+  // get posts that the user did not react to
+  let recommendedPosts = Posts.filter((post) => !Likes[post.id].has(userId) && !Dislikes[post.id].has(userId))
+  // console.log(recommendedPosts);
+  res.send({ recommendedPosts });
 });
 
 

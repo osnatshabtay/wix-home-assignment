@@ -31,6 +31,8 @@ function App() {
 
   const [allPosts, setAllPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
+  const [recommendedPosts, setRecommendedPosts] = useState([]);
+
 
   const [tags, setTags] = useState({});
   const [tagsList, setTagsList] = useState([]);
@@ -133,8 +135,22 @@ function App() {
       });
   };
 
-  const getRecommendedPostsForMe = () => {
-    // TODO - add the recommended-posts-for-me functionality here
+  const getRecommendedPostsForMe = (userId) => {
+    console.log("start");
+    console.log(userId);
+    console.log("####");
+    axios
+    .get(`${baseURL}/my-recommended-posts?userId=${userId}`)
+    .then((response) => {
+      console.log("before");
+      console.log(recommendedPosts);
+      setRecommendedPosts([...response.data['recommendedPosts']]);
+      console.log(recommendedPosts);
+      console.log("after");
+    })
+    .catch((error) => {
+      handleAlert(error.message, true, 'error');
+    });
   };
 
   ///////////////////// post req /////////////////////
@@ -269,6 +285,14 @@ function App() {
             Enter 2023 Blog Exam
           </Typography>
           <Button
+              onClick={handleHomeClick}
+              href='/my-recommended-posts'
+              size='large'
+              startIcon={<RecommendIcon />}
+            >
+              Recommended posts
+            </Button>
+          <Button
             className={
               window.location.href !==
                 'http://localhost:3000/my-recommended-posts' &&
@@ -309,10 +333,18 @@ function App() {
             path='/my-recommended-posts'
             element={
               <MyRecommendedPosts
-                Posts={[]}
+                Posts={recommendedPosts}
                 Tags={tags}
+                tagsList={tagsList}
+                handleAddNewTag={addNewTag}
                 getRecommendedPostsForMe={getRecommendedPostsForMe}
                 userId={userId}
+                handleAddTagToPost={addTagToPost}
+                filterPostsByTag={filterPostsByTag}
+                selectedTagId={selectedTagId}
+                handleAddLikeOrDislikeToPost={addLikeOrDislikeToPost}
+                getLikeInformaion={getLikeInformaion}
+
               />
             }
           />
