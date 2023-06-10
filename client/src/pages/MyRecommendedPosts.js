@@ -26,9 +26,8 @@ function MyRecommendedPosts({
   const [currPostID, setCurrPostID] = useState(null); // used to set current set to post id
 
   useEffect(() => {
-    console.log(" in reco " + userId);
-    getRecommendedPostsForMe(userId);
-  }, []);
+    getRecommendedPostsForMe();
+  }, [userId]);
 
   ///////////////////////////////////// handle tag on post /////////////////////////////////////
   const handleAddTagClick = (event, selectedPostId) => { 

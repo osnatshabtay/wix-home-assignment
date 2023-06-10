@@ -69,9 +69,6 @@ app.get('/user-like-post', cors(corsOptions), (req, res) => {
 
 app.get('/my-recommended-posts', cors(corsOptions), (req, res) => {
   const userId = req.query.userId;
-  console.log("????");
-  console.log(userId);
-  console.log("!!!!");
 
   if(!userId){
     res.status(400).end("Invalid userId");
@@ -80,7 +77,6 @@ app.get('/my-recommended-posts', cors(corsOptions), (req, res) => {
 
   // get posts that the user did not react to
   let recommendedPosts = Posts.filter((post) => !Likes[post.id].has(userId) && !Dislikes[post.id].has(userId))
-  // console.log(recommendedPosts);
   res.send({ recommendedPosts });
 });
 

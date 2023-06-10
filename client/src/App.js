@@ -80,6 +80,7 @@ function App() {
       .then((response) => {
         setAllPosts([...response.data['filteredPosts']]);
         setFilteredPosts([...response.data['filteredPosts']]);
+        setRecommendedPosts([...response.data['filteredPosts']]);
       })
       .catch((error) => {
         handleAlert(error.message, true, 'error');
@@ -135,18 +136,12 @@ function App() {
       });
   };
 
-  const getRecommendedPostsForMe = (userId) => {
-    console.log("start");
-    console.log(userId);
-    console.log("####");
+  const getRecommendedPostsForMe = () => {
+
     axios
     .get(`${baseURL}/my-recommended-posts?userId=${userId}`)
     .then((response) => {
-      console.log("before");
-      console.log(recommendedPosts);
       setRecommendedPosts([...response.data['recommendedPosts']]);
-      console.log(recommendedPosts);
-      console.log("after");
     })
     .catch((error) => {
       handleAlert(error.message, true, 'error');
@@ -246,6 +241,11 @@ function App() {
     setSelectedTagId('');
   };
 
+  const handleRecommendedClick = () => {
+    setSelectedPopularityQuery('');
+    setSelectedTagId('');
+  };
+
   ///////////////////////////////////// filters /////////////////////////////////////
   const filterPostsByPopularity = (minLikeNum = 1) => {
     setSelectedPopularityQuery(`${minLikeNum}`);
@@ -285,12 +285,12 @@ function App() {
             Enter 2023 Blog Exam
           </Typography>
           <Button
-              onClick={handleHomeClick}
               href='/my-recommended-posts'
+              onClick={handleRecommendedClick}
               size='large'
               startIcon={<RecommendIcon />}
             >
-              Recommended posts
+              Explore more posts
             </Button>
           <Button
             className={

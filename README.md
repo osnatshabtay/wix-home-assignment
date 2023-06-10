@@ -56,3 +56,8 @@ When you're ready to submit your exam:
 4. Bonus - limit the title to 80 characters and show an error message for longer values
 ### Bonus:
 1. Bonus - provide an ellipsis solution for content longer than 200 characters with a read more button. Read more button should have `data-testid=postContent-readMoreButton`
+
+
+TODO -
+1. filter functionality in recommecnded posts
+2. 
