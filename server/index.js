@@ -68,6 +68,10 @@ app.post('/posts', cors(corsOptions), (req, res) => {
     return;
   }
 
+  if(title.length > 80){
+    res.status(400).end("title can not be over 80 charecters");
+    return;
+  }
   // Create new post object.
   const newPost = {id: id, title: title, content: content, userId: userId, likes: 0, dislikes: 0}
   // Add post to a Posts model.

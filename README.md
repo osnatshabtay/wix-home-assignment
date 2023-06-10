@@ -25,11 +25,11 @@ When you're ready to submit your exam:
    2. The title should be `Wix Enter exam submission - {Your full name}`
    3. The content should include `email: {The email address you used for your application}`
 ## Requirements:
-### Tags: 
+### Tags:  DONE
 1. Implement the add tag functionality to a post. You'll notice that currently the “+” sign to add a tag to a post will open a Select component with the available tags, but clicking on them will do nothing
 > you can look at the tags list implementation (for both the **client** and **server** side) for an example.  
 
-### Like / Dislike:
+### Like / Dislike: DONE
 1. Implement the like & dislike functionality to a post. You'll notice that currently the like and dislike buttons are available, but clicking on them will do nothing.
    1. Clicking on like as the first reaction to a post should result in a full like button indicator with `data-testid={'fullLikeIcon-'+${postId}}`
    2. Clicking on dislike as the first reaction to a post should result in a full dislike button indicator with `data-testid={'fullDislikeIcon-'+${postId}}`
@@ -49,7 +49,7 @@ When you're ready to submit your exam:
    > so for example if user1 liked posts 1 and 3, and user2 liked posts 1 and 2, then they both liked post 1, and the recomended posts for user1 will only show post 2, and the recomended posts for user2 will only show post 3.
 > To simulate multiple users, you can just browse the app from different browsers, or clear the user cookie
 1. Bonus - recommended posts should be sorted by recommendation strength - recommendation strength is the number of users who liked a post, and also liked a different post that the current user liked.
-### Add post:
+### Add post: DONE
 1. Clicking on the submit button should not submit anything if required fields are empty. Instead an empty required field should indicate an error
 2. Use actual tags instead of hardcoded ones
 3. Should submit when all required fields are filled, and then redirect to the home page
