@@ -12,10 +12,12 @@ function Home({
   handleAddNewTag, 
   selectedTagId,
   selectedPopularityQuery,
+  selectedTagQuery,
   userId,
   handleAddTagToPost,
   handleAddLikeOrDislikeToPost,
   getLikeInformaion,
+  filterPostsByTag,
 }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -25,10 +27,17 @@ function Home({
   searchParams.get('popularity');
 
   useEffect(() => {
-    if (selectedPopularityQuery !== '') {
+    if (selectedPopularityQuery !== '' && selectedTagQuery !== '') {
+      setSearchParams({ tag: `${selectedTagQuery}`, popularity: `${selectedPopularityQuery}` });
+    }
+    else if (selectedTagQuery !== '') { 
+      setSearchParams({ tag: `${selectedTagQuery}` });
+    }
+
+    else if (selectedPopularityQuery !== '') { 
       setSearchParams({ popularity: `${selectedPopularityQuery}` });
     }
-  }, [selectedPopularityQuery, setSearchParams]);
+  }, [selectedPopularityQuery, selectedTagQuery, setSearchParams]);
 
   ///////////////////////////////////// handle tag on post /////////////////////////////////////
   const handleAddTagClick = (event, selectedPostId) => { 
@@ -42,7 +51,9 @@ function Home({
   };
 
   ///////////////////////////////////// handle filter tag /////////////////////////////////////
-  const handleTagClick = (tagName, tagId) => {};
+  const handleTagClick = (tagName, tagId) => {
+    filterPostsByTag(tagName, tagId);
+  };
 
   ///////////////////////////////////// render components /////////////////////////////////////
   return (

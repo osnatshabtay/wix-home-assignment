@@ -4,10 +4,12 @@ function Tag({
   tagName,
   postId = '',
   handleOnClick,
-  selectedTagId = '',
+  selectedTagId,
   isDisabled,
 }) {
   const dataTestId = postId ? `tag-${tagName}-${postId}` : `tag-${tagName}`;
+  const color_ = selectedTagId.includes(tagName) ? 'primary' : 'default';
+
   return (
     <Fab
       key={tagName}
@@ -17,7 +19,7 @@ function Tag({
       className='Badge'
       disabled={isDisabled}
       onClick={() => handleOnClick(tagName, dataTestId)}
-      color='default'
+      color={color_}
       data-testid={dataTestId}
     >
       {tagName}

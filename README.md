@@ -37,7 +37,7 @@ When you're ready to submit your exam:
    4. Clicking on dislike on a post that is already disliked should do nothing
    5. Clicking on like on a post that is already disliked should toggle the post to liked mode (same as in the first bullet)
    6. Clicking on dislike on a post that is already liked should toggle the post to disliked mode (same as in the second bullet)
-### Filter:
+### Filter: DONE
 1. By popularity - clicking on popularity from the menu should change the url and show only posts with higher popularity (number of likes). Currently clicking on a dropdown item will redirect but no filtering will occur
 2. By tag - Clicking on a tag from the tags list, or from a post's tags should change the url and show only posts with the selected tag. Currently clicking on them does nothing
 3. Support filtering by both tag and popularity by url, for example tag=frontend&popularity=2. If a user clicks on a tag from the tags list, and then on popularity, both should be in the url

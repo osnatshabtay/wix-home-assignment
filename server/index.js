@@ -21,6 +21,9 @@ const corsOptions = {
   credentials: true,
 };
 
+///////////////////////////////////// get req /////////////////////////////////////
+
+
 app.get('/', cors(corsOptions), (req, res) => {
   res.send('Welcome to your Wix Enter exam!');
 });
@@ -30,18 +33,30 @@ app.get('/user', cors(corsOptions), (req, res) => {
   res.cookie('userId', userId).send({ id: userId });
 });
 
-///////////////////////////////////// posts /////////////////////////////////////
 
 app.get('/posts', cors(corsOptions), (req, res) => {
+  let filteredPosts = Posts;
+
+  // filter by popularity
   if (req.query.popularity) {
-    // TODO - implement popularity filter functionality here
     const popularity = Number(req.query.popularity); 
-    const filteredPosts = Posts.filter((post) => post.likes >= popularity);
-    res.send({ filteredPosts });
-    return;
-    // End of TODO
+    filteredPosts = filteredPosts.filter((post) => post.likes >= popularity);
+    // res.send({ filteredPosts });
+    // return;
   }
-  res.send({ Posts });
+
+  // filter by tag
+  if (req.query.tag) {
+    const tag = req.query.tag; 
+    filteredPosts = filteredPosts.filter(post => Tags[tag] && Tags[tag][post.id]);
+  }
+
+
+  // if(filteredPosts.length !== 0){
+  //   res.send({filtredPosts});
+  //   return;
+  // }
+  res.send({ filteredPosts });
 });
 
 app.get('/user-like-post', cors(corsOptions), (req, res) => {
@@ -54,6 +69,13 @@ app.get('/user-like-post', cors(corsOptions), (req, res) => {
 
   res.send({ like: Likes[postID].has(userID), dislike: Dislikes[postID].has(userID) });
 });
+
+app.get('/tags', cors(corsOptions), (req, res) => {
+  res.send({ Tags });
+});
+
+
+///////////////////////////////////// post req /////////////////////////////////////
 
 
 app.post('/posts', cors(corsOptions), (req, res) => {
@@ -124,10 +146,6 @@ app.post('/post/postID/:postID/likeOrDis/:likeOrDis', cors(corsOptions), (req, r
     }
   }
   res.send({ Posts }).status(200).end();
-});
-///////////////////////////////////// tags /////////////////////////////////////
-app.get('/tags', cors(corsOptions), (req, res) => {
-  res.send({ Tags });
 });
 
 app.post('/tags/tagName/:tagName', cors(corsOptions), (req, res) => {
