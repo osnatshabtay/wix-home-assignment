@@ -78,7 +78,6 @@ function App() {
       .then((response) => {
         setAllPosts([...response.data['Posts']]);
         setFilteredPosts([...response.data['Posts']]);
-        //console.log(response.data['Posts'][0].likes.size);
       })
       .catch((error) => {
         handleAlert(error.message, true, 'error');
@@ -113,6 +112,19 @@ function App() {
       .get(`${baseURL}/posts?${url}`)
       .then((response) => {
         setFilteredPosts([...response.data['filteredPosts']]);
+      })
+      .catch((error) => {
+        handleAlert(error.message, true, 'error');
+      });
+  };
+
+
+  const getLikeInformaion = (postID, userID, callback) => {
+    axios
+      .get(`${baseURL}/user-like-post?postID=${postID}&userID=${userID}`)
+      .then((response) => {
+        // send callback to Post.js
+        callback(response.data.like, response.data.dislike);
       })
       .catch((error) => {
         handleAlert(error.message, true, 'error');
@@ -312,7 +324,8 @@ function App() {
                 selectedPopularityQuery={selectedPopularityQuery}
                 userId={userId}
                 handleAddTagToPost={addTagToPost}
-                handleAddLikeOrDislikeToPost ={addLikeOrDislikeToPost}
+                handleAddLikeOrDislikeToPost={addLikeOrDislikeToPost}
+                getLikeInformaion={getLikeInformaion}
               />
             }
           />

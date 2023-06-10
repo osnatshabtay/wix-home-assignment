@@ -15,6 +15,7 @@ function Home({
   userId,
   handleAddTagToPost,
   handleAddLikeOrDislikeToPost,
+  getLikeInformaion,
 }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -64,7 +65,8 @@ function Home({
                 isTagDisabled={false}
                 Tags={Tags}
                 userId={userId}
-                handleAddLikeOrDislikeToPost = {handleAddLikeOrDislikeToPost}
+                handleAddLikeOrDislikeToPost={handleAddLikeOrDislikeToPost}
+                getLikeInformaion={getLikeInformaion}
               />
             );
           })}

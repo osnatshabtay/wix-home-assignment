@@ -29,6 +29,7 @@ function Post({
   Tags,
   userId,
   handleAddLikeOrDislikeToPost,
+  getLikeInformaion,
 }) {
   const getTagsByPostId = (postID) => {
     const tagsArr = [];
@@ -46,12 +47,14 @@ function Post({
   const [didUserLikePost, setDidUserLikePost] = useState(false);
   const [didUserDislikePost, setDidUserDislikePost] = useState(false);
 
+  const handleResponse = (like, dislike) => {
+    // Handle the response data
+    setDidUserLikePost(like);
+    setDidUserDislikePost(dislike);
+  };
 
-  // console.log("-------");
-  // console.log(numOfDislikes);
-
-  //const didUserLikePost = false;
-  //const didUserDislikePost = false;
+  // sends get req to the server to get info wether user liked/disliked post
+  getLikeInformaion(postId, userId, handleResponse)
 
   return (
     <ListItem

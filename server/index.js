@@ -54,6 +54,18 @@ app.get('/posts', cors(corsOptions), (req, res) => {
   res.send({ Posts });
 });
 
+app.get('/user-like-post', cors(corsOptions), (req, res) => {
+  const postID = req.query.postID;
+  const userID = req.query.userID;
+  
+  if(!Likes[postID] || !Dislikes[postID]){
+    res.status(400).end("postID not found");
+  }
+
+  res.send({ like: Likes[postID].has(userID), dislike: Dislikes[postID].has(userID) });
+});
+
+
 app.post('/posts', cors(corsOptions), (req, res) => {
   const userId = req.cookies?.userId;
   if (!userId) {
@@ -70,6 +82,8 @@ app.post('/posts', cors(corsOptions), (req, res) => {
   const newPost = {id: id, title: title, content: content, userId: userId, likes: 0, dislikes: 0}
   // Add post to a Posts model.
   Posts.push(newPost);
+  Likes[id] = new Set();
+  Dislikes[id] = new Set();
 
   // if tag was provided.
   if(selectedTag){
@@ -81,19 +95,6 @@ app.post('/posts', cors(corsOptions), (req, res) => {
     Tags[selectedTag][id] = true;
   }
   res.send({ Posts, Tags }).status(200).end();
-});
-
-
-app.get('/posts', cors(corsOptions), (req, res) => {
-  if (req.query.popularity) {
-    // TODO - implement popularity filter functionality here
-    const popularity = Number(req.query.popularity); 
-    const filteredPosts = Posts.filter((post) => post.likes >= popularity);
-    res.send({ filteredPosts });
-    return;
-    // End of TODO
-  }
-  res.send({ Posts });
 });
 
 app.post('/post/postID/:postID/likeOrDis/:likeOrDis', cors(corsOptions), (req, res) => {
