@@ -31,16 +31,6 @@ app.get('/user', cors(corsOptions), (req, res) => {
 });
 
 ///////////////////////////////////// posts /////////////////////////////////////
-// app.get('/posts', cors(corsOptions), (req, res) => {
-//   if (req.query.popularity) {
-//     // TODO - implement popularity filter functionality here
-//     const popularity = Number(req.query.popularity);
-//     res.send({ Posts });
-//     return;
-//     // End of TODO
-//   }
-//   res.send({ Posts });
-// });
 
 app.get('/posts', cors(corsOptions), (req, res) => {
   if (req.query.popularity) {
@@ -57,7 +47,7 @@ app.get('/posts', cors(corsOptions), (req, res) => {
 app.get('/user-like-post', cors(corsOptions), (req, res) => {
   const postID = req.query.postID;
   const userID = req.query.userID;
-  
+
   if(!Likes[postID] || !Dislikes[postID]){
     res.status(400).end("postID not found");
   }
