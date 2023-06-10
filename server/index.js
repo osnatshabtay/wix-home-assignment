@@ -87,6 +87,18 @@ app.post('/posts', cors(corsOptions), (req, res) => {
 });
 
 
+app.get('/posts', cors(corsOptions), (req, res) => {
+  if (req.query.popularity) {
+    // TODO - implement popularity filter functionality here
+    const popularity = Number(req.query.popularity); 
+    const filteredPosts = Posts.filter((post) => post.likes >= popularity);
+    res.send({ filteredPosts });
+    return;
+    // End of TODO
+  }
+  res.send({ Posts });
+});
+
 app.post('/post/postID/:postID/likeOrDis/:likeOrDis', cors(corsOptions), (req, res) => {
   const userId = req.cookies?.userId;
   if (!userId) {

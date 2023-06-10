@@ -112,7 +112,6 @@ function App() {
     axios
       .get(`${baseURL}/posts?${url}`)
       .then((response) => {
-        console.log(response.data);
         setFilteredPosts([...response.data['filteredPosts']]);
       })
       .catch((error) => {
