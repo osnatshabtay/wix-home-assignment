@@ -306,7 +306,7 @@ function App() {
             size='large'
             startIcon={<FilterAltIcon />}
             onClick={(e) => handlePopularityClick(e)}
-            data-testid='popularityBtn'
+            data-testid='myRecommendedPostsBtn'
           >
             Filter by Popularity
           </Button>
