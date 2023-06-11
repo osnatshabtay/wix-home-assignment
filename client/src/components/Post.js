@@ -47,9 +47,17 @@ function Post({
   const [didUserLikePost, setDidUserLikePost] = useState(false);
   const [didUserDislikePost, setDidUserDislikePost] = useState(false);
 
+  const [isExpanded, setIsExpanded] = useState(false);
 
-  // a callback function. when a response (about like and dislike of specific user to a specific post)
-  // comse back from server this function is activated and sets to states of like and dislike of the post
+  const maxLength = 200; // Maximum length for post content
+
+  // Function to handle "Read more" button click
+  const handleReadMoreClick = () => {
+    setIsExpanded(true);
+  };
+
+  // A callback function. when a response (about like and dislike of specific user to a specific post)
+  // comes back from server this function is activated and sets to states of like and dislike of the post
   const handleResponse = (like, dislike) => {
     // Handle the response data
     setDidUserLikePost(like);
@@ -81,8 +89,20 @@ function Post({
               gutterBottom
               data-testid={`postContent-${postId}`}
             >
-              {postContent}
-            </Typography>
+              {postContent.length > maxLength && !isExpanded ? (
+                <>
+                  {postContent.slice(0, maxLength)}...
+                  <button
+                    onClick={handleReadMoreClick}
+                    data-testid={`postContent-readMoreButton`}
+                  >
+                    Read more
+                  </button>
+                </>
+              ) : (
+                postContent
+              )}
+          </Typography>
           </CardContent>
         </ListItemButton>
         <CardActions>

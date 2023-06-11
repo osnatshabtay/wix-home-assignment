@@ -63,5 +63,5 @@ When you're ready to submit your exam:
 3. Should submit when all required fields are filled, and then redirect to the home page
 4. Bonus - limit the title to 80 characters and show an error message for longer values
 
-### Bonus:
+### Bonus: DONE
 1. Bonus - provide an ellipsis solution for content longer than 200 characters with a read more button. Read more button should have `data-testid=postContent-readMoreButton`
