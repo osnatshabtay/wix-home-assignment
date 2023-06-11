@@ -46,7 +46,7 @@ app.get('/posts', cors(corsOptions), (req, res) => {
     filteredPosts = filteredPosts.filter((post) => post.likes >= popularity);
   }
 
-  // filter by tag
+  // filter by tag 
   if (req.query.tag) {
     const tag = req.query.tag; 
     filteredPosts = filteredPosts.filter(post => Tags[tag] && Tags[tag][post.id]);
@@ -100,15 +100,16 @@ app.post('/posts', cors(corsOptions), (req, res) => {
     res.status(400).end("title can not be over 80 charecters");
     return;
   }
+
   // Create new post object.
   const newPost = {id: id, title: title, content: content, userId: userId, likes: 0, dislikes: 0}
+
   // Add post to a Posts model.
   Posts.push(newPost);
   Likes[id] = new Set();
   Dislikes[id] = new Set();
 
-  // if tag was provided.
-  if(selectedTag){
+  if(selectedTag){   // if tag was provided.
 
     // create new tag in Tags.
     if(!Tags[selectedTag]){
@@ -119,6 +120,7 @@ app.post('/posts', cors(corsOptions), (req, res) => {
   res.send({ Posts, Tags }).status(200).end();
 });
 
+// A post function that updates the array of Like, Dislike, Posts
 app.post('/post/postID/:postID/likeOrDis/:likeOrDis', cors(corsOptions), (req, res) => {
   const userId = req.cookies?.userId;
   if (!userId) {
@@ -169,7 +171,7 @@ app.post('/tags/tagName/:tagName', cors(corsOptions), (req, res) => {
   res.send({ Tags }).status(200).end();
 });
 
-
+// A post request to the server that adds tagName (@param) to the post with postID (@param)
 app.post(`/addTags/postID/:postID/tagName/:tagName`, cors(corsOptions), (req, res) => {
   const userId = req.cookies?.userId;
   if (!userId) {

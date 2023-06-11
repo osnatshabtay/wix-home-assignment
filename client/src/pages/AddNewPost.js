@@ -17,6 +17,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 function AddNewPost({ handleAddPost, tagsList }) {
   //const tagsList = ['Server', 'Frontend', 'Security', 'Analytics', 'Mobile']; // mock tags data 
+  
   const tagsArray = Object.entries(tagsList).map(([tagName]) => ({ tagName}));
   const navigate = useNavigate();
 

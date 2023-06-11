@@ -15,6 +15,7 @@ import {
   Alert,
   Snackbar,
 } from '@mui/material';
+
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import RecommendIcon from '@mui/icons-material/Recommend';
@@ -50,7 +51,7 @@ function App() {
         handleAlert('', false, '');
       }, 1500);
     }
-  }, [showAlert]);
+  }, [showAlert]); 
 
   const handleAlert = (message, isShow, type) => {
     setAlertMsg(message);
@@ -109,6 +110,7 @@ function App() {
     getUser();
   }, [getPosts, getTags, getUser]);
 
+  // Send a get request to the server so that we receive filtered posts (by popularity and/or tag) or all of them
   const getFilteredPosts = (popularity, tag) => {
     const tmp = popularity !== '' ? `popularity=${popularity}` : '';
     const url = tag !== '' ? (popularity !== '' ? `tag=${tag}&popularity=${popularity}` : `tag=${tag}`) : tmp;
@@ -116,19 +118,19 @@ function App() {
     axios
       .get(`${baseURL}/posts?${url}`)
       .then((response) => {
-        setFilteredPosts([...response.data['filteredPosts']]);
+        setFilteredPosts([...response.data['filteredPosts']]);  
       })
       .catch((error) => {
         handleAlert(error.message, true, 'error');
       });
   };
 
-
+// A get request to the server requests information for a particular user if he liked or disliked a specific post
   const getLikeInformaion = (postID, userID, callback) => {
     axios
       .get(`${baseURL}/user-like-post?postID=${postID}&userID=${userID}`)
       .then((response) => {
-        // send callback to Post.js
+        // send callback to Post.js 
         callback(response.data.like, response.data.dislike);
       })
       .catch((error) => {
@@ -171,8 +173,8 @@ function App() {
       .then((response) => {
         navigate('/');
         setAllPosts([...response.data['Posts']]);
-        setFilteredPosts([...response.data['Posts']]);
-        setTags({ ...response.data['Tags'] });
+        setFilteredPosts([...response.data['Posts']]); 
+        setTags({ ...response.data['Tags'] }); 
         handleAlert("Post added successfully", true, "success");
       })
       .catch((error) => {
@@ -211,18 +213,19 @@ function App() {
       });
   };
 
-    const addLikeOrDislikeToPost = (postID, userID, likeOrDis) => { 
-      axios
-        .post(`${baseURL}/post/postID/${postID}/likeOrDis/${likeOrDis}`)
-        .then((response) => {
-          setAllPosts([...response.data['Posts']]);
-          setFilteredPosts([...response.data['Posts']]);
-          handleAlert("like or dislike was added successfully", true, "success");
-        })
-        .catch((error) => {
-          handleAlert(error.message, true, 'error');
-        });
-    };
+  // Sending a post request to the server that will update when the user likes or dislikes the post
+  const addLikeOrDislikeToPost = (postID, userID, likeOrDis) => { 
+    axios
+      .post(`${baseURL}/post/postID/${postID}/likeOrDis/${likeOrDis}`)
+      .then((response) => {
+        setAllPosts([...response.data['Posts']]);
+        setFilteredPosts([...response.data['Posts']]);
+        handleAlert("like or dislike was added successfully", true, "success");
+      })
+      .catch((error) => {
+        handleAlert(error.message, true, 'error');
+      });
+  };
 
 
   ///////////////////////////////////// handle click events /////////////////////////////////////

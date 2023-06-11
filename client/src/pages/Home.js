@@ -42,11 +42,11 @@ function Home({
   ///////////////////////////////////// handle tag on post /////////////////////////////////////
   const handleAddTagClick = (event, selectedPostId) => { 
     setCurrPostID(selectedPostId);
-    setAnchorEl(event.currentTarget);
+    setAnchorEl(event.currentTarget); 
   };
 
   const handleMenuClose = (selectedOption) => {
-    handleAddTagToPost(selectedOption, currPostID);
+    handleAddTagToPost(selectedOption, currPostID); //send to the server
     setAnchorEl(null);
   };
 

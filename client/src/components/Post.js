@@ -47,6 +47,9 @@ function Post({
   const [didUserLikePost, setDidUserLikePost] = useState(false);
   const [didUserDislikePost, setDidUserDislikePost] = useState(false);
 
+
+  // a callback function. when a response (about like and dislike of specific user to a specific post)
+  // comse back from server this function is activated and sets to states of like and dislike of the post
   const handleResponse = (like, dislike) => {
     // Handle the response data
     setDidUserLikePost(like);
@@ -86,7 +89,7 @@ function Post({
           {isAddTagBtn && (
             <AddTagButton
               dataTestId={`postAddTagBtn-${postId}`}
-              onClick={(e) => handleAddTagClick(e, postId)}
+              onClick={(e) => handleAddTagClick(e, postId)} //send postID to Home
             />
           )}
           {isTag &&
