@@ -48,7 +48,9 @@ function MyRecommendedPosts({
   return (
     <div className='container'>
       <List sx={{ width: '650px' }}>
-        {Posts.length !== 0 &&
+        { 
+          Posts.sort((a, b) => b.likes - a.likes) &&  // sort by amount of likes
+          Posts.length !== 0 &&
           Posts.map((post) => {
             return (
               <Post

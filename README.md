@@ -28,6 +28,7 @@ When you're ready to submit your exam:
 
 
 ## Requirements:
+
 ### Tags:  DONE
 1. Implement the add tag functionality to a post. You'll notice that currently the “+” sign to add a tag to a post will open a Select component with the available tags, but clicking on them will do nothing
 > you can look at the tags list implementation (for both the **client** and **server** side) for an example.  
@@ -48,7 +49,7 @@ When you're ready to submit your exam:
 3. Support filtering by both tag and popularity by url, for example tag=frontend&popularity=2. If a user clicks on a tag from the tags list, and then on popularity, both should be in the url
 4. Bonus - Mark the selected tag and/or popularity option using the components' apis, selected color should be "primary".
 
-### Recommendations
+### Recommendations: DONE
 1. Add a button to the header menu with the text `Explore more posts` and with `data-testid=myRecommendedPostsBtn`. Clicking on this button will redirect to `/my-recommended-posts` page which show posts in the same manner as the home page, but filters only recommended posts. The following attributes are true for a post to be considered a recommended post:
    - the user did not react to the post yet (neither like nor dislike)
    - other users that have liked posts that the user liked, also liked this post.
@@ -64,8 +65,3 @@ When you're ready to submit your exam:
 
 ### Bonus:
 1. Bonus - provide an ellipsis solution for content longer than 200 characters with a read more button. Read more button should have `data-testid=postContent-readMoreButton`
-
-
-TODO -
-1. filter functionality in recommecnded posts
-2. implemente second recommended def

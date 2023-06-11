@@ -54,5 +54,33 @@ function updateLikes(postId, operation) {
     }
   }
   
+function getRecommendedPosts(userId) {
+  const recommendedPosts_attribute2 = new Set();
+  const likedPosts = new Set();
 
-module.exports = { Posts, Likes, Dislikes, updateLikes, updateDislikes };
+  // Get posts that the current user has liked
+  for (const postId in Likes) {
+    if (Likes.hasOwnProperty(postId)) {
+      const usersWhoLikedPost = Likes[postId]; // Get the users who liked the curr post (postId)
+
+      // if curr user (userId) liked curr post (postId)
+      if (usersWhoLikedPost.has(userId)) {
+        for (const user of usersWhoLikedPost) {
+
+          // Collect the liked posts of the users who liked postId, excluding the ones the current user has already liked
+          for(const postId_ in Likes){
+            if (user !== userId && Likes[postId_].has(user) && !Likes[postId_].has(userId)) {
+              recommendedPosts_attribute2.add(postId_);
+            }
+          }
+        }
+      }
+    }
+  }
+  const recommendedPosts_attribute1Array = Posts.filter((post) => !recommendedPosts_attribute2.has(post.id) && !Likes[post.id].has(userId) && !Dislikes[post.id].has(userId));
+  const recommendedPosts_attribute2Array = Posts.filter((post) => recommendedPosts_attribute2.has(post.id));
+
+  return recommendedPosts_attribute1Array.concat(recommendedPosts_attribute2Array);
+}
+
+module.exports = { Posts, Likes, Dislikes, updateLikes, updateDislikes, getRecommendedPosts };

@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 const cors = require('cors');
 
 const { baseUrl } = require('../constants');
-const { Posts, Likes, Dislikes, updateLikes, updateDislikes } = require('./model/Posts');
+const { Posts, Likes, Dislikes, updateLikes, updateDislikes, getRecommendedPosts } = require('./model/Posts');
 const { Tags } = require('./model/Tags');
 
 const app = express();
@@ -75,8 +75,7 @@ app.get('/my-recommended-posts', cors(corsOptions), (req, res) => {
     return;
   }
 
-  // get posts that the user did not react to
-  let recommendedPosts = Posts.filter((post) => !Likes[post.id].has(userId) && !Dislikes[post.id].has(userId))
+  let recommendedPosts = getRecommendedPosts(userId);
   res.send({ recommendedPosts });
 });
 
