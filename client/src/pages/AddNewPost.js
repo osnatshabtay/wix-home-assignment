@@ -19,7 +19,7 @@ function AddNewPost({ handleAddPost, tagsList }) {
   //const tagsList = ['Server', 'Frontend', 'Security', 'Analytics', 'Mobile']; // mock tags data 
   
   const tagsArray = Object.entries(tagsList).map(([tagName]) => ({ tagName})); // tag list from App 
-  const navigate = useNavigate(); // back to Home page
+  const navigate = useNavigate(); //used to back to Home page
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
