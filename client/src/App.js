@@ -81,7 +81,7 @@ function App() {
       .then((response) => {
         setAllPosts([...response.data['filteredPosts']]);
         setFilteredPosts([...response.data['filteredPosts']]);
-        setRecommendedPosts([...response.data['filteredPosts']]);
+        // setRecommendedPosts([...response.data['filteredPosts']]);
       })
       .catch((error) => {
         handleAlert(error.message, true, 'error');
@@ -138,8 +138,8 @@ function App() {
       });
   };
 
+  //A get request for the server to return me an array of the recommended posts for the userID.
   const getRecommendedPostsForMe = () => {
-
     axios
     .get(`${baseURL}/my-recommended-posts?userId=${userId}`)
     .then((response) => {

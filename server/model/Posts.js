@@ -56,7 +56,6 @@ function updateLikes(postId, operation) {
   
 function getRecommendedPosts(userId) {
   const recommendedPosts_attribute2 = new Set();
-  const likedPosts = new Set();
 
   // Get posts that the current user has liked
   for (const postId in Likes) {

@@ -55,6 +55,7 @@ app.get('/posts', cors(corsOptions), (req, res) => {
   res.send({ filteredPosts });
 });
 
+// Returns if a user has liked/disliked a post 
 app.get('/user-like-post', cors(corsOptions), (req, res) => {
   const postID = req.query.postID;
   const userID = req.query.userID;
@@ -67,6 +68,7 @@ app.get('/user-like-post', cors(corsOptions), (req, res) => {
   res.send({ like: Likes[postID].has(userID), dislike: Dislikes[postID].has(userID) });
 });
 
+// Returns recommended posts for user
 app.get('/my-recommended-posts', cors(corsOptions), (req, res) => {
   const userId = req.query.userId;
 
